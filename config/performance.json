@@ -1,0 +1,24 @@
+{
+  "_comment": "Performance budgets. Latency numbers are DESIGN TARGETS, not measurements of any real GST provider (none is integrated). Route sizes are gzip KB of client JS from scripts/bundle-report.mjs (an approximation of First Load JS); regenerate with `npm run build && npm run perf:bundle`. Ceilings carry ~8% headroom over the milestone-11 measurement.",
+  "latencyMs": {
+    "feedback": 300,
+    "serverOverheadP95": 50,
+    "storedResult": 500,
+    "liveTypical": 2000,
+    "liveAcceptable": 5000,
+    "hardDeadline": 20000
+  },
+  "routeGzipKb": {
+    "/": 65,
+    "/login": 64,
+    "/dashboard": 84,
+    "/verify": 102,
+    "/verify/bulk": 85,
+    "/clients": 78,
+    "/gstins": 77,
+    "/bulk-checks": 78,
+    "/bulk-checks/[id]": 79,
+    "/concerns": 80,
+    "/audit-logs": 75
+  }
+}

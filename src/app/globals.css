@@ -1,0 +1,239 @@
+@import "tailwindcss";
+
+/* ==========================================================================================
+   DESIGN TOKENS — Navy + Emerald. Components consume SEMANTIC tokens only (see tests/design-tokens.test.ts):
+   never raw palette classes (bg-white, text-slate-*, bg-red-500 …).
+
+   Light and dark are designed separately (dark is NOT an inversion): own surfaces, borders, muted text,
+   soft status backgrounds and shadows. Every text/background pair is checked for WCAG AA (≥ 4.5:1) by
+   tests/design-tokens.test.ts, which parses this file.
+
+   Two deliberate deviations from the suggested palette, both for AA on tinted backgrounds:
+   - muted text is #56667C (suggested #64748B is 4.48:1 on the page background);
+   - success/warning/danger/info each have a darker *-strong text colour, because the fill colours
+     (#0F9D78, #D97706 …) are below 4.5:1 as text on white.
+   ========================================================================================== */
+:root {
+  color-scheme: light;
+
+  --background: #f7f9fc;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --surface-muted: #f1f5f9;
+  --surface-hover: #e9eef5;
+  --foreground: #172033;
+  --foreground-muted: #56667c;
+  --foreground-subtle: #5f6f86;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+
+  --primary: #0f3d56;
+  --primary-hover: #082c3d;
+  --primary-foreground: #ffffff;
+  --primary-soft: #e4eff5;
+
+  --success: #0f9d78;           /* fills, icons, dots */
+  --success-strong: #0b7a5c;    /* text */
+  --success-soft: #e6f6f0;      /* tinted background */
+  --success-solid: #0b7a5c;     /* solid button background */
+  --success-solid-hover: #086247;
+  --success-solid-foreground: #ffffff;
+
+  --warning: #d97706;
+  --warning-strong: #a84f06;
+  --warning-soft: #fff4e0;
+
+  --danger: #dc2626;
+  --danger-strong: #b01919;
+  --danger-soft: #fdeceb;
+  --danger-solid: #b91c1c;
+  --danger-solid-foreground: #ffffff;
+
+  --info: #2563eb;
+  --info-strong: #1d4ed8;
+  --info-soft: #e8f0fe;
+
+  --ring: #2563eb;
+  --overlay: rgb(8 28 40 / 0.5);
+
+  /* "Inverse" surfaces: sidebar, drawer, landing bands, auth aside */
+  --inverse: #082c3d;
+  --inverse-foreground: #f1f6f9;
+  --inverse-muted: #b6c7d1;
+  --inverse-subtle: #98adb9;
+  --inverse-hover: #0f3a50;
+  --inverse-active: #164a63;
+  --inverse-border: #1c4b61;
+
+  --skeleton-a: #e8edf3;
+  --skeleton-b: #f3f6fa;
+
+  --shadow-card-v: 0 1px 2px rgb(15 23 42 / 0.05);
+  --shadow-pop-v: 0 8px 24px rgb(15 23 42 / 0.12), 0 2px 6px rgb(15 23 42 / 0.06);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: #07131a;
+  --surface: #0d2029;
+  --surface-elevated: #122a35;
+  --surface-muted: #10252f;
+  --surface-hover: #163340;
+  --foreground: #f1f5f9;
+  --foreground-muted: #9fb0bb;
+  --foreground-subtle: #8a9eab;
+  --border: #263d47;
+  --border-strong: #38566a;
+
+  --primary: #3b9ab8;
+  --primary-hover: #5db3cf;
+  --primary-foreground: #04141b;
+  --primary-soft: #0e2a35;
+
+  --success: #34c99a;
+  --success-strong: #4ad9ae;
+  --success-soft: #0f3a30;
+  --success-solid: #34c99a;
+  --success-solid-hover: #52d9ae;
+  --success-solid-foreground: #04140e;
+
+  --warning: #f59e0b;
+  --warning-strong: #fbbf24;
+  --warning-soft: #3a2a0c;
+
+  --danger: #f87171;
+  --danger-strong: #fca5a5;
+  --danger-soft: #3b1618;
+  --danger-solid: #f87171;
+  --danger-solid-foreground: #1a0505;
+
+  --info: #60a5fa;
+  --info-strong: #93c5fd;
+  --info-soft: #14263f;
+
+  --ring: #60a5fa;
+  --overlay: rgb(0 0 0 / 0.62);
+
+  --inverse: #0a1b24;
+  --inverse-foreground: #f1f5f9;
+  --inverse-muted: #a9bbc6;
+  --inverse-subtle: #8fa4b0;
+  --inverse-hover: #12303c;
+  --inverse-active: #18404f;
+  --inverse-border: #223c47;
+
+  --skeleton-a: #11262f;
+  --skeleton-b: #17323e;
+
+  --shadow-card-v: 0 1px 2px rgb(0 0 0 / 0.35);
+  --shadow-pop-v: 0 10px 30px rgb(0 0 0 / 0.55), 0 0 0 1px rgb(255 255 255 / 0.04);
+}
+
+/* Map semantic variables to Tailwind utilities (bg-surface, text-foreground, border-line, …) */
+@theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-hover: var(--surface-hover);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--foreground-muted);
+  --color-subtle: var(--foreground-subtle);
+  --color-line: var(--border);
+  --color-line-strong: var(--border-strong);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-soft: var(--primary-soft);
+
+  --color-success: var(--success);
+  --color-success-strong: var(--success-strong);
+  --color-success-soft: var(--success-soft);
+  --color-success-solid: var(--success-solid);
+  --color-success-solid-hover: var(--success-solid-hover);
+  --color-success-solid-foreground: var(--success-solid-foreground);
+  --color-warning: var(--warning);
+  --color-warning-strong: var(--warning-strong);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-strong: var(--danger-strong);
+  --color-danger-soft: var(--danger-soft);
+  --color-danger-solid: var(--danger-solid);
+  --color-danger-solid-foreground: var(--danger-solid-foreground);
+  --color-info: var(--info);
+  --color-info-strong: var(--info-strong);
+  --color-info-soft: var(--info-soft);
+
+  --color-ring: var(--ring);
+  --color-overlay: var(--overlay);
+
+  --color-inverse: var(--inverse);
+  --color-inverse-foreground: var(--inverse-foreground);
+  --color-inverse-muted: var(--inverse-muted);
+  --color-inverse-subtle: var(--inverse-subtle);
+  --color-inverse-hover: var(--inverse-hover);
+  --color-inverse-active: var(--inverse-active);
+  --color-inverse-border: var(--inverse-border);
+
+  --radius-card: 0.75rem;
+  --shadow-card: var(--shadow-card-v);
+  --shadow-pop: var(--shadow-pop-v);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+}
+
+/* One consistent, visible keyboard focus ring in both themes */
+:where(a, button, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* Restrained 150 ms transitions on interactive states */
+:where(a, button, input, select, textarea, summary, [role="tab"], [role="menuitem"], [role="option"], tr) {
+  transition: color 150ms ease, background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease, opacity 150ms ease;
+}
+/* Applied for ~200 ms while the theme is switched so the whole page eases between themes (never on first paint) */
+html.theme-transition, html.theme-transition *, html.theme-transition *::before, html.theme-transition *::after {
+  transition: background-color 180ms ease, border-color 180ms ease, color 180ms ease, fill 180ms ease, box-shadow 180ms ease !important;
+}
+
+@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
+.skeleton {
+  background: linear-gradient(90deg, var(--skeleton-a) 25%, var(--skeleton-b) 37%, var(--skeleton-a) 63%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  border-radius: 6px;
+}
+@keyframes pop-in { from { opacity: 0; transform: translateY(4px) scale(0.98); } to { opacity: 1; transform: none; } }
+.animate-pop { animation: pop-in 160ms ease-out; }
+@keyframes toast-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.animate-toast { animation: toast-in 180ms ease-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; }
+}
+
+.tabular { font-variant-numeric: tabular-nums; }
+
+
+/* print: reports (milestone 15). The app chrome is hidden and the content spans the page; colours are forced light by the page itself. */
+@media print {
+  aside, header.sticky, nav[aria-label="Quick navigation"], .no-print { display: none !important; }
+  div[class*="lg:pl-64"] { padding-left: 0 !important; }
+  main { max-width: none !important; padding: 0 !important; }
+  body { background: #fff !important; }
+  article table { break-inside: auto; } article tr, article section, article header { break-inside: avoid; }
+}

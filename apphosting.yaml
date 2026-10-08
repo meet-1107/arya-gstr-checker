@@ -1,0 +1,37 @@
+# Firebase App Hosting config — STAGING ONLY until a real GST provider adapter exists (production preflight refuses the mock provider).
+# Check before every deploy:  npm run preflight   (see scripts/preflight.mjs)
+runConfig:
+  cpu: 1
+  memoryMiB: 1024
+  minInstances: 0
+  maxInstances: 1        # the job queue, de-duplication and rate window are in-process (ISSUE-006): run ONE instance
+
+env:
+  - variable: STORE
+    value: firestore
+  - variable: AUTH_MODE
+    value: firebase
+  - variable: GST_PROVIDER
+    value: mock
+  - variable: ALLOW_MOCK_IN_PRODUCTION      # every verification result is FAKE while this is set. Remove once a real provider is wired.
+    value: true-for-staging-only
+  # Public web config (safe to expose). Fill from Firebase console → Project settings → Your apps → Web app.
+  - variable: NEXT_PUBLIC_FIREBASE_API_KEY
+    value: REPLACE_ME
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+    value: REPLACE_ME
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+    value: REPLACE_ME
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+    value: REPLACE_ME
+    availability: [BUILD, RUNTIME]
+  - variable: NEXT_PUBLIC_AUTH_MODE
+    value: firebase
+    availability: [BUILD, RUNTIME]
+  - variable: FIREBASE_PROJECT_ID
+    value: REPLACE_ME
+  # No service-account key: App Hosting runs with Application Default Credentials. Any real secret (e.g. CRON_SECRET) goes in
+  # Cloud Secret Manager via `firebase apphosting:secrets:set NAME` and is referenced here with `secret: NAME`, never written in this file.

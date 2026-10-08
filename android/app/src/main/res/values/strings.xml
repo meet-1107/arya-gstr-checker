@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Arya GSTR Checker</string>
+    <string name="title_activity_main">Arya GSTR Checker</string>
+    <string name="package_name">com.arya.gstrchecker</string>
+    <string name="custom_url_scheme">com.arya.gstrchecker</string>
+</resources>
